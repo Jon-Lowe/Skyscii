@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skyskii
+namespace Skyscii.SentientStuff
 {
-    interface ITargetableObject
+    class Sentient : ITargetableObject, ISearchable
     {
     }
 }
