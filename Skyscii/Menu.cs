@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skyskii
+namespace Skyscii
 {
     // could also be implemented as an interface
     abstract class Menu

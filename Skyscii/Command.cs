@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skyskii
+namespace Skyscii
 {
     // purpose is to subdivide 'command' strings into
     // action and target.

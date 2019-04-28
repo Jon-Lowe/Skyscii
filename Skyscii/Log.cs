@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skyskii
+namespace Skyscii
 {
     // stores commands and resulting flavour text
     // could be replaced with a standard log?

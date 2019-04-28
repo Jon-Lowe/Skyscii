@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skyskii
+namespace Skyscii
 {
-    class Inventory : ISearchable
+    class MainMenu : Menu
     {
     }
 }
