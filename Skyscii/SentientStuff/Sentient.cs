@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skyskii.SentientStuff
+namespace Skyscii.SentientStuff
 {
     class Sentient : ITargetableObject, ISearchable
     {
