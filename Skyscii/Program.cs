@@ -6,8 +6,16 @@ namespace Skyscii
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.ReadLine();
+            Menu currentMenu = new MainMenu();
+            string currentCommand;
+
+            while (!currentMenu.Quit)
+            {
+                currentMenu.Draw();
+                currentCommand = Console.ReadLine();
+                currentMenu = currentMenu.ProcessCommand(currentCommand);
+                Console.Clear();
+            }
         }
     }
 }
