@@ -28,7 +28,7 @@ namespace Skyscii
             }
         }
 
-        internal override Menu ProcessCommand(string command)
+        internal override Menu ProcessCommand(string command, Log log)
         {
             Menu result = this;
             switch (command)
