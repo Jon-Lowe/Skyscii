@@ -11,6 +11,8 @@ namespace Skyscii
         protected List<string> globalActions = new List<string>();
         protected bool quit = false;
         protected string error = "";
+
+        // TEMPORARY - (for drawing log) Should end up using a number input or key based menu to page through lines
         protected const int NUM_LINES = 10;
 
         public bool Quit { get => quit; }
