@@ -11,6 +11,8 @@ namespace Skyscii
      *  Supports multi word targets, eg "use red potion"
      *
      *  NOTE: current implementation does not support multi-word commands.
+     *  
+     *  Author: SV
     */
     public class Command {
         
@@ -20,7 +22,7 @@ namespace Skyscii
         // the target of the command - eg goblin, potion
         private string target = "";
 
-        //@param: commandString - the command string, containing either an action, or an action and target.
+        //@param: commandString - a command string, containing either an action, or an action and target.
         public Command(String commandString){
 
             commandString = commandString.Trim();
