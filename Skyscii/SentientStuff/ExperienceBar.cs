@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Skyscii.SentientStuff
 {
-    public class ExperienceBar : StatBar
+    class ExperienceBar// : StatBar
     {
     }
 }
