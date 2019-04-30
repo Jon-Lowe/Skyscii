@@ -51,12 +51,8 @@ namespace Skyscii.SentientStuff
         // @param resetCurrent: if true, current will be set to equal maximum. Else current will remain the same.
         public void SetMax(int max, bool resetCurrent) {
             this.max = max;
-            if (resetCurrent) {
+            if (resetCurrent || (current > max)) {
                 this.current = max;
-            }
-
-            if (current > max) {
-                current = max;
             }
         }
     }
