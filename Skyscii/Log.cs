@@ -6,7 +6,7 @@ namespace Skyscii
 {
     // stores commands and resulting flavour text
     // could be replaced with a standard log?
-    class Log
+    public class Log
     {
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Skyscii
 {
-    interface ISearchable
+    public interface ISearchable
     {
     }
 }

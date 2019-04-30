@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Skyscii
 {
-    class MainMenu : Menu
+    public class MainMenu : Menu
     {
     }
 }

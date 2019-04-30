@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Skyscii
 {
-    interface ITargetableObject
+    public interface ITargetableObject
     {
     }
 }
