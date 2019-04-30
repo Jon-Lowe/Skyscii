@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Skyscii
 {
-    class Inventory : ISearchable
+    public class Inventory : ISearchable
     {
     }
 }

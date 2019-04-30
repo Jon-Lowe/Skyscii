@@ -5,7 +5,7 @@ using System.Text;
 namespace Skyscii
 {
     // consumable item logic can go here
-    class Item : ITargetableObject
+    public class Item : ITargetableObject
     {
     }
 }

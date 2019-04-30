@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Skyscii
 {
-    class Equippable : Item
+    public class Equippable : Item
     {
     }
 }

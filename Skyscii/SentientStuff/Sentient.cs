@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Skyscii.SentientStuff
 {
-    class Sentient : ITargetableObject, ISearchable
+    public class Sentient : ITargetableObject, ISearchable
     {
     }
 }

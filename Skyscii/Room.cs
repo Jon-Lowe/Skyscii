@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Skyscii
 {
-    class Room : ISearchable, ITargetableObject
+    public class Room : ISearchable, ITargetableObject
     {
     }
 }
