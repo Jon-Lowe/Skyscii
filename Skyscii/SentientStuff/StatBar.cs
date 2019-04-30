@@ -9,6 +9,8 @@ namespace Skyscii.SentientStuff
         For example, health or mana 
 
         current implementation: 'current' cannot exceed 'maximum'.
+
+        Author: SV
      */
     public class StatBar
     {
