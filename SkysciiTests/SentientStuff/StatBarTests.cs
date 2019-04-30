@@ -44,6 +44,7 @@ namespace Skyscii.SentientStuff.Tests
             s.SetMax(20, true);
             // current should be updated to equal new max, 10
             Assert.AreEqual(20, s.GetCurrent());
+            Assert.AreEqual(20, s.GetMax());
         }
 
         [TestMethod()]
@@ -52,6 +53,7 @@ namespace Skyscii.SentientStuff.Tests
             s.SetMax(20, false);
             // current should remain as its former value, 10
             Assert.AreEqual(10, s.GetCurrent());
+            Assert.AreEqual(20, s.GetMax());
         }
     }
 }
