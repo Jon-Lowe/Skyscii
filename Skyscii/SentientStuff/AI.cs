@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skyskii.Sentient
+namespace Skyscii.SentientStuff
 {
     class AI
     {
