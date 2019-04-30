@@ -20,27 +20,44 @@ namespace Skyscii.SentientStuff
 
         // initialises a new StatBar with maximum and current set to input parameter maximum
         public StatBar(int max) {
-             // do nothing yet
+            this.max = max;
+            this.current = max;
         }
 
         // increments 'current' by the amount shown
-        // @param amount: the amount 'current' will be incremented by. can be negative. will not exceed maximum
+        // @param amount: the amount 'current' will be incremented by. can be negative.
+        // @return: updated current. will not exceed maximum.
         public int Increment(int amount) {
-            return 0;
+
+            if (current + amount > max){
+                current = max;
+            }
+            else
+                current = current + amount;
+
+            return current;
         }
 
         public int GetCurrent() {
-            return 0;
+            return current;
         }
 
         public int GetMax() {
-            return 0;
+            return max;
         }
 
         // used to set the max.
+        // @param max: what to set max to
         // @param resetCurrent: if true, current will be set to equal maximum. Else current will remain the same.
         public void SetMax(int max, bool resetCurrent) {
-            
+            this.max = max;
+            if (resetCurrent) {
+                this.current = max;
+            }
+
+            if (current > max) {
+                current = max;
+            }
         }
     }
 }

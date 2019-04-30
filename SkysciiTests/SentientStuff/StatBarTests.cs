@@ -12,9 +12,9 @@ namespace Skyscii.SentientStuff.Tests
     public class StatBarTests
     {
         [TestMethod()]
-        public void IncrementingShouldAffectCurrent(){
+        public void IncrementingShouldIncreaseCurrent(){
             StatBar s = new StatBar(10);
-            s.Increment(-5);
+            s.Increment(-5); // incrementing negative will subtract
 
             int expectedCurrent = 10 - 5;
             Assert.AreEqual(expectedCurrent, s.GetCurrent());
@@ -54,6 +54,17 @@ namespace Skyscii.SentientStuff.Tests
             // current should remain as its former value, 10
             Assert.AreEqual(10, s.GetCurrent());
             Assert.AreEqual(20, s.GetMax());
+        }
+
+        // current should never be greater than max, so if max is reduced to be smaller than current
+        // current should be reduced to equal max.
+        [TestMethod()]
+        public void SettingMaxToBeSmallerThanCurrentWillReduceCurrent() {
+            StatBar s = new StatBar(10);
+            s.SetMax(5, false);
+
+            Assert.AreEqual(5, s.GetMax());
+            Assert.AreEqual(5, s.GetCurrent(), "current should not be greater than max.");
         }
     }
 }
