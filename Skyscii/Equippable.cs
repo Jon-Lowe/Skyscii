@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Skyscii
 {
-    public class Equippable : Item
-    {
-    }
+//    public class Equippable : Item
+//    {
+//
+//    }
 }
