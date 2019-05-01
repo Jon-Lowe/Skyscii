@@ -4,7 +4,15 @@ using System.Text;
 
 namespace Skyscii
 {
-    public interface ITargetableObject
-    {
+    /*
+     An interface for any game object that can be targeted by a command
+     eg room, Sentient, Item.   
+     */
+    public interface ITargetableObject{
+
+        String GetName();
+
+        String GetDescription();
+
     }
 }
