@@ -6,6 +6,11 @@ namespace Skyscii.SentientStuff
 {
     public class Sentient : ITargetableObject, ISearchable
     {
+        public ITargetableObject findTarget(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetDescription()
         {
             throw new NotImplementedException();
