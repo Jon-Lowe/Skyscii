@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SentientStuff\ExperienceBarTests.cs" />
     <Compile Include="SentientStuff\StatBarTests.cs" />
   </ItemGroup>
   <ItemGroup>

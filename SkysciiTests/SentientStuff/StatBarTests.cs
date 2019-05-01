@@ -66,5 +66,27 @@ namespace Skyscii.SentientStuff.Tests
             Assert.AreEqual(5, s.GetMax());
             Assert.AreEqual(5, s.GetCurrent(), "current should not be greater than max.");
         }
+
+        [TestMethod()]
+        public void canSetCurrentCorrectly() {
+            StatBar s = new StatBar(10);
+            s.SetCurrent(8);
+
+            Assert.AreEqual(8, s.GetCurrent());
+            Assert.IsFalse(s.IsFull());
+        }
+
+        [TestMethod()]
+        public void IsFullReturnsFalseIfCurrentIsLessThanMax() {
+            StatBar s = new StatBar(10);
+            s.Increment(-1);
+            Assert.IsFalse(s.IsFull());
+        }
+
+        [TestMethod()]
+        public void IsFullReturnsTrueIfCurrentIsEqualToMax() {
+            StatBar s = new StatBar(10);
+            Assert.IsTrue(s.IsFull());
+        }
     }
 }
