@@ -6,6 +6,11 @@ namespace Skyscii
 {
     public class Room : ISearchable, ITargetableObject
     {
+        public ITargetableObject findTarget(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetDescription()
         {
             throw new NotImplementedException();

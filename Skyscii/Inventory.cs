@@ -6,5 +6,9 @@ namespace Skyscii
 {
     public class Inventory : ISearchable
     {
+        public ITargetableObject findTarget(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
