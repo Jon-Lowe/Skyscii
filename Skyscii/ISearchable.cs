@@ -4,7 +4,9 @@ using System.Text;
 
 namespace Skyscii
 {
-    public interface ISearchable
-    {
+    public interface ISearchable {
+
+        ITargetableObject findTarget(String name);
+
     }
 }
