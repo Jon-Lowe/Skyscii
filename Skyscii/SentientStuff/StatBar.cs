@@ -29,7 +29,7 @@ namespace Skyscii.SentientStuff
         // increments 'current' by the amount shown
         // @param amount: the amount 'current' will be incremented by. can be negative.
         // @return: updated current. will not exceed maximum.
-        public int Increment(int amount) {
+        public virtual int Increment(int amount) {
 
             if (current + amount > max){
                 current = max;
@@ -40,12 +40,23 @@ namespace Skyscii.SentientStuff
             return current;
         }
 
+        // can override condition of max >= current.
+        public int SetCurrent(int amount) {
+            this.current = amount;
+            return this.current;
+        }
+
         public int GetCurrent() {
             return current;
         }
 
         public int GetMax() {
             return max;
+        }
+
+        // returns true if the stat bar is full
+        public bool IsFull(){
+            return (current >= max);
         }
 
         // used to set the max.
