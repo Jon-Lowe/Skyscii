@@ -11,10 +11,10 @@ namespace Skyscii.SentientStuff
         private ExperienceBar exp;
         private int attack;
 
-        public Stats(int attack, int maxHealth, int maxLevel, int currentLevel)
+        public Stats(int attack, int maxHealth, int expRequiredForNextLevel, int currentLevel)
         {
             health = new StatBar(maxHealth);
-            exp = new ExperienceBar(maxLevel, currentLevel);
+            exp = new ExperienceBar(expRequiredForNextLevel, currentLevel);
             this.attack = attack;
         }
 
