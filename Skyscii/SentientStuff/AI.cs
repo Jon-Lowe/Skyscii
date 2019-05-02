@@ -6,5 +6,8 @@ namespace Skyscii.SentientStuff
 {
     public class AI
     {
+        public void generateResponse(Sentient toControl) {
+
+        }
     }
 }
