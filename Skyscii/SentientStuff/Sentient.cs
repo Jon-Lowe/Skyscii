@@ -69,6 +69,11 @@ namespace Skyscii.SentientStuff
             // perhaps return flavour text?
         }
 
+        /*
+         * applies level up logic to sentient, increasing its stats and its level by 1
+         * @param attack: true if attack should be increased during level up
+         * @param health: true if health should be increased during level up
+         */
         public String LevelUp(bool attack, bool health) {
             String toReturn = "you don't have enough experience to level up yet";
             // this logic should be nicer in future.
@@ -172,6 +177,9 @@ namespace Skyscii.SentientStuff
                 return "you try to pick up the " + itemName + "... it doesn't go very well.";
         }
 
+        /*
+         * returns true if Sentient is alive.
+         */
         public bool IsAlive()
         {
             return (stats.Health.GetCurrent() > 0);
