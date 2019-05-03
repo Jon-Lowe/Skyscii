@@ -9,7 +9,6 @@ namespace Skyscii.SentientStuff
      */
     public class AI
     {
-        
         public String generateResponse(Sentient toControl) {
             return toControl.Attack("player");
         }

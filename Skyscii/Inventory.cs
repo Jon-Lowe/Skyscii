@@ -30,6 +30,11 @@ namespace Skyscii
         }
 
 
+        // remove item from the Item holder
+        public void RemoveItem(Item item)
+        {
+            Bag.Remove(item);
+        }
 
         // lets use the interface
         public ITargetableObject findTarget(string name)
