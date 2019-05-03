@@ -30,14 +30,23 @@ namespace Skyscii
             ITargetableObject result = items.findTarget(name);
             if (result == null)
             {
+                //find dead creatures and save to seperate list
+                List<Sentient> reapersList = new List<Sentient>();
                 foreach (Sentient s in creatures)
                 {
                     if (!s.IsAlive())
                     {
-                        creatures.Remove(s);
+                        reapersList.Add(s);
                     }
                 }
 
+                //destroy dead creatures
+                foreach (Sentient s in reapersList)
+                {
+                    creatures.Remove(s);
+                }
+
+                // find target
                 foreach (Sentient s in creatures)
                 {
                     if (s.GetName() == name)
