@@ -129,7 +129,7 @@ namespace Skyscii.SentientStuff
                     return name + " attacks " + targetName + " for " + stats.Attack + " points of damage!";
                 else {
                     // TODO: lazy expgained, should be more fun
-                    int expGained = 15 * enemyCreature.stats.Exp.GetLevel();
+                    int expGained = 20 * enemyCreature.stats.Exp.GetLevel();
                     stats.Exp.Increment(expGained);
                     String toReturn =  name +" attacks " + targetName + " for " + stats.Attack + " points of damage, and slays them!\n" +
                         "You gain "+expGained+" experience points!";
