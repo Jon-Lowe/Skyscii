@@ -59,6 +59,21 @@ namespace Skyscii.SentientStuff
         }
 
         /*
+         * returns true if sentient is the last one left alive.
+         */
+        public bool LastOneStanding() {
+            if (location.Creatures.Count == 1)
+                return true;
+
+            foreach (Sentient s in location.Creatures) {
+                if (s != this && s.IsAlive()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /*
          * increments the Sentient's stats based off the provided attack, health, experience
          */
         public void ApplyModifier(int attack, int health, int experience) {
@@ -114,9 +129,9 @@ namespace Skyscii.SentientStuff
                     return name + " attacks " + targetName + " for " + stats.Attack + " points of damage!";
                 else {
                     // TODO: lazy expgained, should be more fun
-                    int expGained = 15 * enemyCreature.stats.Exp.GetLevel();
+                    int expGained = 20 * enemyCreature.stats.Exp.GetLevel();
                     stats.Exp.Increment(expGained);
-                    String toReturn =  name +" attacks " + targetName + " for " + stats.Attack + " points of damage, and slay them!\n" +
+                    String toReturn =  name +" attacks " + targetName + " for " + stats.Attack + " points of damage, and slays them!\n" +
                         "You gain "+expGained+" experience points!";
                     if (stats.Exp.GetPendingLevelUps() > 0)
                         toReturn += " It looks like you can level up!";
