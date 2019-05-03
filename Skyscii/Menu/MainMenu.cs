@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Skyscii.SentientStuff;
 
 namespace Skyscii
 {
@@ -34,7 +35,7 @@ namespace Skyscii
             switch (command)
             {
                 case "play":
-                    result = new MainMenu();
+                    result = new BattleMenu(new Sentient("player", "it's you!", 10, 50, new Room("room", "it's a room", new List<Sentient>(), new Inventory())));
                     break;
                 case "quit":
                     quit = true;
