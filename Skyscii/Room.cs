@@ -13,18 +13,17 @@ namespace Skyscii
         private List<Sentient> creatures;
         private Inventory items;
 
-        public Room(string name, string description, List<Sentient> creatures, Inventory items, Room nextRoom)
+        public Room(string name, string description, List<Sentient> creatures, Inventory items)
         {
             this.name = name;
             this.description = description;
             this.creatures = creatures;
             this.items = items;
-            this.nextRoom = nextRoom;
         }
 
         public Inventory Items { get => items; }
         public List<Sentient> Creatures { get => creatures; }
-        public Room NextRoom { get => nextRoom; }
+        public Room NextRoom { get => nextRoom; set => nextRoom = value; }
 
         public ITargetableObject findTarget(string name)
         {
