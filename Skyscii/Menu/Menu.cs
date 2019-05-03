@@ -9,10 +9,6 @@ namespace Skyscii
     {
         protected List<string> validActions = new List<string>();
         protected List<string> globalActions = new List<string>();
-
-        // new room
-        // new player
-        // new enemy
         protected bool quit = false;
         protected string error = "";
 
