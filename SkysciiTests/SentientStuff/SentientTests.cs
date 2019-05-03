@@ -23,7 +23,7 @@ namespace Skyscii.SentientStuff.Tests
         private void setup() {
 
             roomItem = new Item("squid", "it looks at you regretfully", 1000, 0, 12);
-            
+
             room = new Room("testroom", "this is a test room", creatures, inv);
             player = new Sentient("player", "it's you!", 20, 30, room);
             goblin = new Sentient("goblin", "he is lean, mean, and very green.", 2, 30, room);
@@ -53,7 +53,7 @@ namespace Skyscii.SentientStuff.Tests
             Assert.AreEqual(originalHealth - player.Stats.Attack, goblin.Stats.Health.GetCurrent());
             // should return flavour text
             Assert.IsTrue(result.Contains("goblin"));
-            
+
         }
 
         [TestMethod()]
@@ -115,6 +115,16 @@ namespace Skyscii.SentientStuff.Tests
 
             // pending level up should decrease by 1
             Assert.AreEqual(originalPendingLevelUps - 1, player.Stats.Exp.GetPendingLevelUps());
+        }
+
+        // integration test with AI, really.
+        // AI is very basic right now, this will need to be updated
+        [TestMethod()]
+        public void BasicAIShouldAttackPlayer() {
+            setup();
+            int originalPlayerHealth = player.Stats.Health.GetCurrent();
+            goblin.ExecuteAIAction();
+            Assert.IsTrue(originalPlayerHealth > player.Stats.Health.GetCurrent());
         }
 
 

@@ -184,5 +184,12 @@ namespace Skyscii.SentientStuff
         {
             return (stats.Health.GetCurrent() > 0);
         }
+
+        public String ExecuteAIAction() {
+            if (ai == null) {
+                return null;
+            }
+            return ai.generateResponse(this);
+        }
     }
 }
