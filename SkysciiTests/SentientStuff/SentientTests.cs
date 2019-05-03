@@ -66,6 +66,9 @@ namespace Skyscii.SentientStuff.Tests
 
             Assert.AreEqual(originalHealth + POTION_HEALTH, player.Stats.Health.GetCurrent());
             Assert.IsTrue(result.Contains("potion"));
+
+            // potion should also be consumed.
+            Assert.IsNull(player.Inventory.findTarget("potion"));
         }
 
         [TestMethod()]
@@ -76,6 +79,9 @@ namespace Skyscii.SentientStuff.Tests
 
             Assert.AreEqual(roomItem, player.Inventory.findTarget("squid"));
             Assert.IsTrue(result.Contains("squid"));
+
+            // potion should be removed from room's inventory
+            Assert.IsNull(player.Location.Items.findTarget("squid"));
         }
 
         [TestMethod()]
