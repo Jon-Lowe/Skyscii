@@ -61,6 +61,13 @@ namespace Skyscii
                             flavourText += '\n'+ s.ExecuteAIAction();
                         }
                     }
+
+                    if (player.LastOneStanding()) {
+                        flavourText += "\nYou have killed absolutely everyone in this room. Time to move on. (moveon)";
+                        validActions.Add("moveon");
+                        result = this;
+                    }
+
                     result = this;
                     break;
                 case "lookat":
@@ -74,6 +81,20 @@ namespace Skyscii
                 case "quit":
                     result = new MainMenu();
                     quit = true;
+                    break;
+                case "moveon":
+                    // means they have killed everyone in the room -> they should move to the next room, 
+                    // or if there is no next room, to the dungeon selection menu
+
+                    // another room remains to be explored.
+                    if (player.Location.NextRoom != null) {
+                        player.Location = player.Location.NextRoom;
+                        flavourText = "you move to the next room in the dungeon...";
+                        return this;
+                    }
+
+                    // mainmenu for now, as MVP.
+                    result = new MainMenu();
                     break;
                 default:
                     error = "Please type a valid command: (not '"+command.GetAction()+"')";
