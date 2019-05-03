@@ -9,24 +9,36 @@ namespace Skyscii
     {
         private string name;
         private string description;
+        private Room nextRoom;
         private List<Sentient> creatures;
         private Inventory items;
 
-        public Room(string name, string description, List<Sentient> creatures, Inventory items)
+        public Room(string name, string description, List<Sentient> creatures, Inventory items, Room nextRoom)
         {
             this.name = name;
             this.description = description;
             this.creatures = creatures;
             this.items = items;
+            this.nextRoom = nextRoom;
         }
 
         public Inventory Items { get => items; }
+        public List<Sentient> Creatures { get => creatures; }
+        public Room NextRoom { get => nextRoom; }
 
         public ITargetableObject findTarget(string name)
         {
             ITargetableObject result = items.findTarget(name);
             if (result == null)
             {
+                foreach (Sentient s in creatures)
+                {
+                    if (!s.IsAlive())
+                    {
+                        creatures.Remove(s);
+                    }
+                }
+
                 foreach (Sentient s in creatures)
                 {
                     if (s.GetName() == name)

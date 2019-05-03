@@ -24,7 +24,7 @@ namespace Skyscii.SentientStuff.Tests
 
             roomItem = new Item("squid", "it looks at you regretfully", 1000, 0, 12);
 
-            room = new Room("testroom", "this is a test room", creatures, inv);
+            room = new Room("testroom", "this is a test room", creatures, inv, null);
             player = new Sentient("player", "it's you!", 20, 30, room);
             goblin = new Sentient("goblin", "he is lean, mean, and very green.", 2, 30, room);
 
