@@ -62,6 +62,12 @@ namespace Skyscii
                         }
                     }
 
+                    if (player.Stats.Exp.GetPendingLevelUps() > 0){
+                        flavourText += "\nYou have "+player.Stats.Exp.GetPendingLevelUps()+" pending level ups. " +
+                            "(levelup)";
+                        validActions.Add("levelup");
+                    }
+
                     if (player.LastOneStanding()) {
                         flavourText += "\nYou have killed absolutely everyone in this room. Time to move on. (moveon)";
                         validActions.Add("moveon");
@@ -95,6 +101,9 @@ namespace Skyscii
 
                     // mainmenu for now, as MVP.
                     result = new MainMenu();
+                    break;
+                case "levelup":
+                    result = new LevelUpMenu(player);
                     break;
                 default:
                     error = "Please type a valid command: (not '"+command.GetAction()+"')";

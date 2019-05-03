@@ -22,10 +22,13 @@ namespace Skyscii.SentientStuff
         private double scaling = 1.2;
 
         // constructor with default level = 1
-        public ExperienceBar(int max) : base(max) { }
+        public ExperienceBar(int max) : base(max) {
+            this.SetCurrent(0);
+        }
 
         public ExperienceBar(int max, int currentLevel) : base(max) {
             this.currentLevel = currentLevel;
+            this.SetCurrent(0);
         }
 
         public override int Increment(int amount){
