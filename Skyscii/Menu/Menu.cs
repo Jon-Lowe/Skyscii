@@ -25,19 +25,21 @@ namespace Skyscii
 
         internal Menu ProcessGlobalCommand(string command, Log log)
         {
+            Command c = new Command(command);
+
             //TEMPORARY - store every command in log for testing (replace with selective inside child menus)
             if (validActions.Contains(command) || globalActions.Contains(command))
             {
                 log.Add(command);
             }
 
-            if (validActions.Contains(command))
+            if (validActions.Contains(c.GetAction()))
             {
-                return ProcessCommand(command, log);
+                return ProcessCommand(c, log);
             }
 
             Menu result = this;
-            switch (command)
+            switch (c.GetAction())
             {
                 case "help":
                     DrawHelp();
@@ -93,7 +95,7 @@ namespace Skyscii
             Console.ReadKey();
         }
 
-        internal abstract Menu ProcessCommand(string command, Log log);
+        internal abstract Menu ProcessCommand(Command command, Log log);
 
         internal abstract void Draw();
     }

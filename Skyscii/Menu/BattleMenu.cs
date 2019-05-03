@@ -15,6 +15,8 @@ namespace Skyscii
 
         public BattleMenu(Sentient player) {
             this.player = player;
+            validActions.Add("attack");
+            validActions.Add("quit");
         }
 
         internal override void Draw()
@@ -37,20 +39,20 @@ namespace Skyscii
             {
                 Console.WriteLine(error);
                 Console.WriteLine();
+                error = "";
             }
             if (flavourText != "") {
                 Console.WriteLine(flavourText);
             }
         }
 
-        internal override Menu ProcessCommand(string command, Log log)
+        internal override Menu ProcessCommand(Command command, Log log)
         {
             Menu result = this;
-            Command c = new Command(command);
-            switch (c.GetAction())
+            switch (command.GetAction())
             {
                 case "attack":
-                    flavourText = player.Attack(c.GetTarget());
+                    flavourText = player.Attack(command.GetTarget());
                     result = this;
                     break;
                 case "quit":

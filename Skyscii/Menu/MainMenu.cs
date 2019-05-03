@@ -26,16 +26,19 @@ namespace Skyscii
             {
                 Console.WriteLine(error);
                 Console.WriteLine();
+                error = "";
             }
         }
 
-        internal override Menu ProcessCommand(string command, Log log)
+        internal override Menu ProcessCommand(Command command, Log log)
         {
             Menu result = this;
-            switch (command)
+            switch (command.GetAction())
             {
                 case "play":
-                    result = new BattleMenu(new Sentient("player", "it's you!", 10, 50, new Room("room", "it's a room", new List<Sentient>(), new Inventory())));
+                    Room room1 = new Room("room", "it's a room", new List<Sentient>(), new Inventory());
+                    room1.Creatures.Add(new Sentient("goblin", "He is green and mean!", 10, 50, room1));
+                    result = new BattleMenu(new Sentient("player", "it's you!", 10, 50, room1));
                     break;
                 case "quit":
                     quit = true;
