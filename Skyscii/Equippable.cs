@@ -10,6 +10,8 @@ namespace Skyscii
         bool equipped = false;
         Sentient equippedBy = null;
 
+        // TODO: equippable should be in sentient's inventory for it to be equipped.
+
         public Equippable(string name, string description, int experience, int health, int attack) : base(name,
             description, experience, health, attack)
         {
