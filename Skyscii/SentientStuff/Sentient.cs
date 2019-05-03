@@ -139,6 +139,10 @@ namespace Skyscii.SentientStuff
             ITargetableObject retrieved = inventory.findTarget(itemName);
             if (retrieved is Item) {
                 Item itemToUse = (Item)retrieved;
+
+                // consume item
+                inventory.RemoveItem(itemToUse);
+                
                 ApplyModifier(itemToUse.AttackOption, itemToUse.HealthOption, itemToUse.ExperienceOption);
                 String toReturn = "You use the " + itemName;
                 if (itemToUse.AttackOption == 0 && itemToUse.HealthOption == 0 && itemToUse.ExperienceOption == 0) {
@@ -169,8 +173,12 @@ namespace Skyscii.SentientStuff
             if (target is Item)
             {
                 Item pickingUp = (Item)target;
-                // TODO: remove item from room's inventory!!!
+
+                // add item to play inventory
                 inventory.AddItem(pickingUp);
+
+                // remove item from room inventory
+                location.Items.RemoveItem(pickingUp);
                 return "you gleefully pick up the " + itemName;
             }
             else

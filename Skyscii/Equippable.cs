@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Skyscii.SentientStuff;
 
 namespace Skyscii
 {
@@ -10,6 +11,17 @@ namespace Skyscii
             description, experience, health, attack)
         {
             // Values will be pushed up to parent class
+
+        }
+
+        public string EquipMe(Sentient s)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string UnequipMe(Sentient s)
+        {
+            throw new NotImplementedException();
         }
     }
 }
