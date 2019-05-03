@@ -38,7 +38,9 @@ namespace Skyscii
                 case "play":
                     Room room1 = new Room("room", "it's a room", new List<Sentient>(), new Inventory());
                     room1.Creatures.Add(new Sentient("goblin", "He is green and mean!", 10, 50, room1));
-                    result = new BattleMenu(new Sentient("player", "it's you!", 10, 50, room1));
+                    Sentient player = new Sentient("player", "it's you!", 10, 50, room1);
+                    room1.Creatures.Add(player);
+                    result = new BattleMenu(player);
                     break;
                 case "quit":
                     quit = true;

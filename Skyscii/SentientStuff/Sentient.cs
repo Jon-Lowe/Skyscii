@@ -104,19 +104,19 @@ namespace Skyscii.SentientStuff
         {
             ITargetableObject enemy = location.findTarget(targetName);
             if (enemy == null) {
-                return "You try to attack a " + targetName + " but couldn't find one!";
+                return name + " tries to attack a " + targetName + " but couldn't find one!";
             }
             if (enemy is Sentient)
             {
                 Sentient enemyCreature = (Sentient)enemy;
                 enemyCreature.ApplyModifier(0, -1 * stats.Attack, 0);
                 if (enemyCreature.IsAlive())
-                    return "You attack " + targetName + " for " + stats.Attack + " points of damage!";
+                    return name + " attacks " + targetName + " for " + stats.Attack + " points of damage!";
                 else {
                     // TODO: lazy expgained, should be more fun
                     int expGained = 15 * enemyCreature.stats.Exp.GetLevel();
                     stats.Exp.Increment(expGained);
-                    String toReturn =  "You attack " + targetName + " for " + stats.Attack + " points of damage, and slay them!\n" +
+                    String toReturn =  name +" attacks " + targetName + " for " + stats.Attack + " points of damage, and slay them!\n" +
                         "You gain "+expGained+" experience points!";
                     if (stats.Exp.GetPendingLevelUps() > 0)
                         toReturn += " It looks like you can level up!";

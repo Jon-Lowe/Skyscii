@@ -16,6 +16,7 @@ namespace Skyscii
         public BattleMenu(Sentient player) {
             this.player = player;
             validActions.Add("attack");
+            validActions.Add("lookat");
             validActions.Add("quit");
         }
 
@@ -28,8 +29,9 @@ namespace Skyscii
                 + player.Stats.Health.GetMax() + "]");
             Console.WriteLine("Enemies:");
             foreach (Sentient s in player.Location.Creatures) {
-                Console.WriteLine(s.GetName()+": [" + s.Stats.Health.GetCurrent() + "/" 
-                    + s.Stats.Health.GetMax() + "]");
+                if (s.GetName() != "player")
+                    Console.WriteLine(s.GetName()+": [" + s.Stats.Health.GetCurrent() + "/" 
+                        + s.Stats.Health.GetMax() + "]");
             }
             Console.WriteLine();
             Console.WriteLine("(attack <enemyname>) attack an enemy");
@@ -48,18 +50,33 @@ namespace Skyscii
 
         internal override Menu ProcessCommand(Command command, Log log)
         {
+            flavourText = "";
             Menu result = this;
             switch (command.GetAction())
             {
                 case "attack":
                     flavourText = player.Attack(command.GetTarget());
+                    foreach (Sentient s in player.Location.Creatures) {
+                        if (s.GetName() != "player" && s.IsAlive()) {
+                            flavourText += '\n'+ s.ExecuteAIAction();
+                        }
+                    }
+                    result = this;
+                    break;
+                case "lookat":
+                    ITargetableObject target = player.Location.findTarget(command.GetTarget());
+                    if (target != null)
+                        flavourText = "You look at a "+command.GetTarget()+ ". \n"+ target.GetDescription();
+                    else
+                        flavourText = "You try to look at a " + command.GetTarget() + " but can't see that far";
                     result = this;
                     break;
                 case "quit":
+                    result = new MainMenu();
                     quit = true;
                     break;
                 default:
-                    error = "Please type a valid command";
+                    error = "Please type a valid command: (not '"+command.GetAction()+"')";
                     break;
             }
             return result;
