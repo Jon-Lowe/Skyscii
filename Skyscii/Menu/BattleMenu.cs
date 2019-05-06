@@ -17,6 +17,7 @@ namespace Skyscii
             this.player = player;
             validActions.Add("attack");
             validActions.Add("lookat");
+            validActions.Add("inventory");
             validActions.Add("quit");
         }
 
@@ -36,6 +37,7 @@ namespace Skyscii
             Console.WriteLine();
             Console.WriteLine("(attack <enemyname>) attack an enemy");
             Console.WriteLine("(look) around");
+            Console.WriteLine("(inventory) open your inventory");
             Console.WriteLine();
             if (error != "")
             {
@@ -104,6 +106,9 @@ namespace Skyscii
                     break;
                 case "levelup":
                     result = new LevelUpMenu(player);
+                    break;
+                case "inventory":
+                    result = new InventoryMenu(player);
                     break;
                 default:
                     error = "Please type a valid command: (not '"+command.GetAction()+"')";
