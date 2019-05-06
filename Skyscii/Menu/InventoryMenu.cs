@@ -79,14 +79,13 @@ namespace Skyscii
                     }
                     else
                     {
-                        examineCheck = player.Inventory.findTarget(command.GetTarget()).GetDescription();
-                        if (examineCheck == null)
+                        if (player.Inventory.findTarget(command.GetTarget()) == null)
                         {
-                            flavourText = "You try to find the " + examineCheck + " but can't!";
+                            flavourText = "You try to find the " + command.GetTarget() + " but can't!";
                         }
                         else
                         {
-                            flavourText = examineCheck;
+                            flavourText = player.Inventory.findTarget(command.GetTarget()).GetDescription();
                         }
                     }
                     result = this;
