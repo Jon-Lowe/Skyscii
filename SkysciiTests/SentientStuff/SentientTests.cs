@@ -16,9 +16,11 @@ namespace Skyscii.SentientStuff.Tests
         List<Sentient> creatures = new List<Sentient>();
         Inventory inv = new Inventory();
         Item roomItem;
+        Equippable sword;
         Room room;
 
         int POTION_HEALTH = 10;
+        int SWORD_ATTACK = 10;
 
         private void setup() {
 
@@ -33,7 +35,10 @@ namespace Skyscii.SentientStuff.Tests
 
             // adding items
             Item potion = new Item("potion", "it's red and bubbly", 0, POTION_HEALTH, 0);
+            sword = new Equippable("sword", "take this with you!", 0, 0, SWORD_ATTACK);
+
             player.Inventory.AddItem(potion);
+            player.Inventory.AddItem(sword);
 
             Item death = new Item("DEATH", "it smiles at you", 0, -99999999, 0);
             player.Inventory.AddItem(death);
@@ -131,6 +136,13 @@ namespace Skyscii.SentientStuff.Tests
             int originalPlayerHealth = player.Stats.Health.GetCurrent();
             goblin.ExecuteAIAction();
             Assert.IsTrue(originalPlayerHealth > player.Stats.Health.GetCurrent());
+        }
+
+        [TestMethod()]
+        public void BugFixUsingEquippableShouldNotConsumeIt() {
+            setup();
+            player.UseItem("sword");
+            Assert.AreEqual(sword, player.Inventory.findTarget("sword"));
         }
 
 
