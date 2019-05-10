@@ -40,7 +40,9 @@ namespace Skyscii
                     room1.Creatures.Add(new Sentient("goblin", "He is green and mean!", 10, 50, room1));
                     Sentient player = new Sentient("player", "it's you!", 10, 50, room1);
                     Item potion = new Item("Green Potion", "As green as the goblin infront of you.", 0, 20, 0);
+                    Equippable sword = new Equippable("sword", "take this with you!", 0, 0, 5);
                     player.Inventory.AddItem(potion);
+                    player.Inventory.AddItem(sword);
                     room1.Creatures.Add(player);
                     result = new BattleMenu(player);
                     break;
