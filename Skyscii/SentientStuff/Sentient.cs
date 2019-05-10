@@ -155,8 +155,9 @@ namespace Skyscii.SentientStuff
             if (retrieved is Item) {
                 Item itemToUse = (Item)retrieved;
 
-                // consume item
-                inventory.RemoveItem(itemToUse);
+                // consume item if it is not equippable
+                if (!(itemToUse is Equippable))
+                    inventory.RemoveItem(itemToUse);
                 
                 ApplyModifier(itemToUse.AttackOption, itemToUse.HealthOption, itemToUse.ExperienceOption);
                 String toReturn = "You use the " + itemName;
