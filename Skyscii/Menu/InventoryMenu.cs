@@ -18,6 +18,7 @@ namespace Skyscii
             this.player = player;
             validActions.Add("use");
             validActions.Add("equip");
+            validActions.Add("unequip");
             validActions.Add("examine");
             validActions.Add("quit");
         }
@@ -44,6 +45,7 @@ namespace Skyscii
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("(use) an item");
             Console.WriteLine("(equip) an item");
+            Console.WriteLine("(unequip) an item");
             Console.WriteLine("(examine) an item");
             Console.WriteLine("(quit) to the previous menu");
             Console.WriteLine();
@@ -61,16 +63,18 @@ namespace Skyscii
 
         internal override Menu ProcessCommand(Command command, Log log)
         {
-            String examineCheck;
             flavourText = "";
             Menu result = this;
             switch (command.GetAction())
             {
                 case "use":
-                    player.UseItem(command.GetTarget());
+                    flavourText = player.UseItem(command.GetTarget());
                     break;
                 case "equip":
-                    player.UseItem(command.GetTarget());
+                    flavourText = player.EquipItem(command.GetTarget());
+                    break;
+                case "unequip":
+                    flavourText = player.UnequipItem(command.GetTarget());
                     break;
                 case "examine":
                     if (player.Inventory.GetBag.Count == 0)

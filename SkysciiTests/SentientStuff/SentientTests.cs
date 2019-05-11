@@ -154,10 +154,22 @@ namespace Skyscii.SentientStuff.Tests
         }
 
         [TestMethod()]
-        public void EquippingItemTwiceShouldReturnStatsToOriginalValue() {
+        public void EquippingItemTwiceShouldNotIncreaseStatsTwice() {
             setup();
             player.EquipItem("sword");
             player.EquipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK + SWORD_ATTACK, player.Stats.Attack);
+        }
+
+        [TestMethod()]
+        public void unequippingItemShouldReduceStatsIfEquipped() {
+            setup();
+            player.EquipItem("sword");
+            player.UnequipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK, player.Stats.Attack);
+
+            // unequipping twice should not decrease stats further, either.
+            player.UnequipItem("sword");
             Assert.AreEqual(PLAYER_STARTING_ATTACK, player.Stats.Attack);
         }
 
