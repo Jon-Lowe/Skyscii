@@ -144,6 +144,16 @@ namespace Skyscii.SentientStuff
         }
 
         /*
+         * searches the sentient's inventory for an item with itemname 
+         * if it exists and is an Equippable, will attempt to equip it
+         * it item is already equipped, will unequip it.
+         */
+        public String EquipItem(string itemName)
+        {
+            return "";
+        }
+
+        /*
          * searches the sentient's inventory for item 'itemName'
          * applies the item's modifier to the sentient
          * returns flavor text
@@ -156,20 +166,22 @@ namespace Skyscii.SentientStuff
                 Item itemToUse = (Item)retrieved;
 
                 // consume item if it is not equippable
-                if (!(itemToUse is Equippable))
+                if (!(itemToUse is Equippable)) {
                     inventory.RemoveItem(itemToUse);
-                
-                ApplyModifier(itemToUse.AttackOption, itemToUse.HealthOption, itemToUse.ExperienceOption);
-                String toReturn = "You use the " + itemName;
-                if (itemToUse.AttackOption == 0 && itemToUse.HealthOption == 0 && itemToUse.ExperienceOption == 0) {
-                    return toReturn += "but nothing happens!";
+
+                    ApplyModifier(itemToUse.AttackOption, itemToUse.HealthOption, itemToUse.ExperienceOption);
+                    String toReturn = "You use the " + itemName;
+                    if (itemToUse.AttackOption == 0 && itemToUse.HealthOption == 0 && itemToUse.ExperienceOption == 0)
+                    {
+                        return toReturn += "but nothing happens!";
+                    }
+                    if (itemToUse.AttackOption > 0)
+                        return toReturn += "and feel stronger";
+                    if (itemToUse.HealthOption > 0)
+                        return toReturn += "and feel vitality surge through you";
+                    if (itemToUse.ExperienceOption > 0)
+                        return toReturn += "and feel wiser";
                 }
-                if (itemToUse.AttackOption > 0) 
-                    return toReturn += "and feel stronger";
-                if (itemToUse.HealthOption > 0)
-                    return toReturn += "and feel vitality surge through you";
-                if (itemToUse.ExperienceOption > 0)
-                    return toReturn += "and feel wiser";
             }
             return "You try to use a " + itemName + " but can't figure out how!";
         }

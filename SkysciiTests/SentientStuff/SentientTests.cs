@@ -21,13 +21,14 @@ namespace Skyscii.SentientStuff.Tests
 
         int POTION_HEALTH = 10;
         int SWORD_ATTACK = 10;
+        int PLAYER_STARTING_ATTACK = 20;
 
         private void setup() {
 
             roomItem = new Item("squid", "it looks at you regretfully", 1000, 0, 12);
-
+            
             room = new Room("testroom", "this is a test room", creatures, inv);
-            player = new Sentient("player", "it's you!", 20, 30, room);
+            player = new Sentient("player", "it's you!", PLAYER_STARTING_ATTACK, 30, room);
             goblin = new Sentient("goblin", "he is lean, mean, and very green.", 2, 30, room);
 
             creatures.Add(player);
@@ -141,8 +142,23 @@ namespace Skyscii.SentientStuff.Tests
         [TestMethod()]
         public void BugFixUsingEquippableShouldNotConsumeIt() {
             setup();
-            player.UseItem("sword");
+            player.EquipItem("sword");
             Assert.AreEqual(sword, player.Inventory.findTarget("sword"));
+        }
+
+        [TestMethod()]
+        public void EquippingItemShouldIncreaseStats() {
+            setup();
+            player.EquipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK + SWORD_ATTACK, player.Stats.Attack);
+        }
+
+        [TestMethod()]
+        public void EquippingItemTwiceShouldReturnStatsToOriginalValue() {
+            setup();
+            player.EquipItem("sword");
+            player.EquipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK, player.Stats.Attack);
         }
 
 
