@@ -270,14 +270,19 @@ namespace Skyscii.SentientStuff
          */
         public string MoveToNextRoom()
         {
-            return "";
+            if (location.NextRoom == null)
+                return "You try to go to the next room, but you're at the end of the dungeon!";
+            else {
+                this.location = location.NextRoom;
+                return "You leave your current room, moving forward into the " + location.GetName();
+            }
         }
 
         /*
          * returns true if another room remains to explore
          */
         public bool NextRoomRemains() {
-            return false;
+            return location.NextRoom != null;
         }
     }
 }
