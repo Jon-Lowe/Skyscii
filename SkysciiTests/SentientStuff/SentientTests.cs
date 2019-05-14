@@ -16,16 +16,19 @@ namespace Skyscii.SentientStuff.Tests
         List<Sentient> creatures = new List<Sentient>();
         Inventory inv = new Inventory();
         Item roomItem;
+        Equippable sword;
         Room room;
 
         int POTION_HEALTH = 10;
+        int SWORD_ATTACK = 10;
+        int PLAYER_STARTING_ATTACK = 20;
 
         private void setup() {
 
             roomItem = new Item("squid", "it looks at you regretfully", 1000, 0, 12);
-
+            
             room = new Room("testroom", "this is a test room", creatures, inv);
-            player = new Sentient("player", "it's you!", 20, 30, room);
+            player = new Sentient("player", "it's you!", PLAYER_STARTING_ATTACK, 30, room);
             goblin = new Sentient("goblin", "he is lean, mean, and very green.", 2, 30, room);
 
             creatures.Add(player);
@@ -33,7 +36,10 @@ namespace Skyscii.SentientStuff.Tests
 
             // adding items
             Item potion = new Item("potion", "it's red and bubbly", 0, POTION_HEALTH, 0);
+            sword = new Equippable("sword", "take this with you!", 0, 0, SWORD_ATTACK);
+
             player.Inventory.AddItem(potion);
+            player.Inventory.AddItem(sword);
 
             Item death = new Item("DEATH", "it smiles at you", 0, -99999999, 0);
             player.Inventory.AddItem(death);
@@ -131,6 +137,40 @@ namespace Skyscii.SentientStuff.Tests
             int originalPlayerHealth = player.Stats.Health.GetCurrent();
             goblin.ExecuteAIAction();
             Assert.IsTrue(originalPlayerHealth > player.Stats.Health.GetCurrent());
+        }
+
+        [TestMethod()]
+        public void BugFixUsingEquippableShouldNotConsumeIt() {
+            setup();
+            player.EquipItem("sword");
+            Assert.AreEqual(sword, player.Inventory.findTarget("sword"));
+        }
+
+        [TestMethod()]
+        public void EquippingItemShouldIncreaseStats() {
+            setup();
+            player.EquipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK + SWORD_ATTACK, player.Stats.Attack);
+        }
+
+        [TestMethod()]
+        public void EquippingItemTwiceShouldNotIncreaseStatsTwice() {
+            setup();
+            player.EquipItem("sword");
+            player.EquipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK + SWORD_ATTACK, player.Stats.Attack);
+        }
+
+        [TestMethod()]
+        public void unequippingItemShouldReduceStatsIfEquipped() {
+            setup();
+            player.EquipItem("sword");
+            player.UnequipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK, player.Stats.Attack);
+
+            // unequipping twice should not decrease stats further, either.
+            player.UnequipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK, player.Stats.Attack);
         }
 
 

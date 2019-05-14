@@ -76,11 +76,27 @@ namespace Skyscii.SentientStuff
         /*
          * increments the Sentient's stats based off the provided attack, health, experience
          */
-        public void ApplyModifier(int attack, int health, int experience) {
+        public String ApplyModifier(int attack, int health, int experience) {
             stats.Health.Increment(health);
             stats.Attack += attack;
             stats.Exp.Increment(experience);
 
+            String toReturn = "";
+            if (attack > 0)
+                toReturn += "You feel stronger.\n";
+            if (attack < 0)
+                toReturn += "You feel weaker\n";
+            if (health > 0)
+                toReturn += "You feel vitality surge through you.\n";
+            if (health < 0)
+                toReturn += "You feel cold...\n";
+            if (experience > 0)
+                toReturn += "You feel wiser, somehow.\n";
+            if (experience < 0)
+                toReturn += "You feel some vital knowledge slipping away\n";
+            if (experience == 0 && health == 0 && attack == 0)
+                toReturn += "But nothing changed.\n";
+            return toReturn;
             // perhaps return flavour text?
         }
 
@@ -144,6 +160,37 @@ namespace Skyscii.SentientStuff
         }
 
         /*
+         * searches the sentient's inventory for an item with itemname 
+         * if it exists and is an Equippable, will attempt to equip it
+         */
+        public String EquipItem(string itemName)
+        {
+            ITargetableObject retrieved = inventory.findTarget(itemName);
+            if (retrieved == null)
+                return "You try to equip a "+itemName+" but cannot find one in your inventory!";
+            if (retrieved is Equippable)
+            {
+                Equippable toEquip = (Equippable)retrieved;
+                return toEquip.EquipMe(this);
+            }
+            else
+                return "You try to equip a " + itemName + " but can't figure out how!";
+        }
+
+        public String UnequipItem(string itemName) {
+            ITargetableObject retrieved = inventory.findTarget(itemName);
+            if (retrieved == null)
+                return "You try to unequip a " + itemName + " but cannot find one in your inventory!";
+            if (retrieved is Equippable)
+            {
+                Equippable toEquip = (Equippable)retrieved;
+                return toEquip.UnequipMe(this);
+            }
+            else
+                return "You try to unequip a " + itemName + " but can't figure out how!";
+        }
+
+        /*
          * searches the sentient's inventory for item 'itemName'
          * applies the item's modifier to the sentient
          * returns flavor text
@@ -152,23 +199,26 @@ namespace Skyscii.SentientStuff
         {
             // search inventory for item
             ITargetableObject retrieved = inventory.findTarget(itemName);
+            if (retrieved == null) {
+                return "You try to use a " + itemName + " but couldn't find one!";
+            }
             if (retrieved is Item) {
                 Item itemToUse = (Item)retrieved;
 
-                // consume item
-                inventory.RemoveItem(itemToUse);
-                
-                ApplyModifier(itemToUse.AttackOption, itemToUse.HealthOption, itemToUse.ExperienceOption);
-                String toReturn = "You use the " + itemName;
-                if (itemToUse.AttackOption == 0 && itemToUse.HealthOption == 0 && itemToUse.ExperienceOption == 0) {
-                    return toReturn += "but nothing happens!";
+                // consume item if it is not equippable
+                if (!(itemToUse is Equippable)) {
+                    inventory.RemoveItem(itemToUse);
+
+                    String toReturn = "You use the " + itemName+"\n";
+
+                    toReturn += ApplyModifier(itemToUse.AttackOption, itemToUse.HealthOption, itemToUse.ExperienceOption);
+                    
+                    if (itemToUse.AttackOption == 0 && itemToUse.HealthOption == 0 && itemToUse.ExperienceOption == 0)
+                    {
+                        return toReturn += "but nothing happens!";
+                    }
+                    return toReturn;
                 }
-                if (itemToUse.AttackOption > 0) 
-                    return toReturn += "and feel stronger";
-                if (itemToUse.HealthOption > 0)
-                    return toReturn += "and feel vitality surge through you";
-                if (itemToUse.ExperienceOption > 0)
-                    return toReturn += "and feel wiser";
             }
             return "You try to use a " + itemName + " but can't figure out how!";
         }
