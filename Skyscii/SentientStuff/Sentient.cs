@@ -264,5 +264,20 @@ namespace Skyscii.SentientStuff
             }
             return ai.generateResponse(this);
         }
+
+        /*
+         * Updates Sentient's location to be the current location's nextRoom, if possible.
+         */
+        public string MoveToNextRoom()
+        {
+            return "";
+        }
+
+        /*
+         * returns true if another room remains to explore
+         */
+        public bool NextRoomRemains() {
+            return false;
+        }
     }
 }
