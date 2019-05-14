@@ -60,12 +60,12 @@ namespace Skyscii
 
         public string GetDescription()
         {
-            return name;
+            return description;
         }
 
         public string GetName()
         {
-            return description;
+            return name;
         }
     }
 }
