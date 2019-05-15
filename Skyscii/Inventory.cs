@@ -33,7 +33,10 @@ namespace Skyscii
         // remove item from the Item holder
         public void RemoveItem(Item item)
         {
-            Bag.Remove(item);
+            if (findTarget(item.Name) != null)
+            {
+                Bag.Remove(item);
+            }
         }
 
         // lets use the interface

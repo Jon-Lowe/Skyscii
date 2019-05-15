@@ -12,8 +12,6 @@ namespace Skyscii.Tests
     public class InventoryTests
     {
         // The Mighty Spoon will always be our test item :D, because no every suspects the spoons.
-
-
         [TestMethod()]
         public void ShouldReturnCorrectNumberOfItems()
         {
@@ -43,6 +41,29 @@ namespace Skyscii.Tests
 
             Assert.AreEqual(spoon0, bag.findTarget("Mighty Spoon0"));
         }
+
+        [TestMethod()]
+        public void ShouldRemoveItemFromInventory()
+        {
+            Inventory bag = new Inventory();
+
+            Item spoon0 = new Item("Mighty Spoon0", "Spoon them to death !!!!!", 0, 0, 0);
+            Item spoon1 = new Item("Mighty Spoon1", "Spoon them to death !!!!!", 0, 0, 0);
+
+
+            // Remove the Item 
+            bag.AddItem(spoon0); 
+            bag.RemoveItem(spoon0);
+
+            Assert.AreEqual(null, bag.findTarget("Mighty Spoon0"));
+
+            // Validation should allow us to pass an incorrect items without crashing the program
+            bag.AddItem(spoon0);
+            bag.RemoveItem(spoon1);
+
+            Assert.AreEqual(spoon0, bag.findTarget("Mighty Spoon0"));
+        }
+
 
     }
 }
