@@ -48,11 +48,20 @@ namespace Skyscii.Tests
             Inventory bag = new Inventory();
 
             Item spoon0 = new Item("Mighty Spoon0", "Spoon them to death !!!!!", 0, 0, 0);
+            Item spoon1 = new Item("Mighty Spoon1", "Spoon them to death !!!!!", 0, 0, 0);
 
+
+            // Remove the Item 
             bag.AddItem(spoon0); 
             bag.RemoveItem(spoon0);
 
             Assert.AreEqual(null, bag.findTarget("Mighty Spoon0"));
+
+            // Validation should allow us to pass an incorrect items without crashing the program
+            bag.AddItem(spoon0);
+            bag.RemoveItem(spoon1);
+
+            Assert.AreEqual(spoon0, bag.findTarget("Mighty Spoon0"));
         }
 
 
