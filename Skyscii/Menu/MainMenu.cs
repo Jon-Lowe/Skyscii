@@ -44,6 +44,14 @@ namespace Skyscii
                     player.Inventory.AddItem(potion);
                     player.Inventory.AddItem(sword);
                     room1.Creatures.Add(player);
+
+                    // room2 setup
+                    Room room2 = new Room("Boss Room", "It looks a little scary!", new List<Sentient>(), new Inventory());
+                    room2.Creatures.Add(new Sentient("Goblin Boss", "This one looks a little overweight", 100, 100, room2));
+                    Item veryGoodSword = new Equippable("MEGASWORD", "The devs really didn't think this through", 10000, 10000, 10000);
+                    room2.Items.AddItem(veryGoodSword);
+                    room1.NextRoom = room2;
+
                     result = new BattleMenu(player);
                     break;
                 case "quit":

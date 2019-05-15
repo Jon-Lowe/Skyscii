@@ -94,14 +94,13 @@ namespace Skyscii
                     // means they have killed everyone in the room -> they should move to the next room, 
                     // or if there is no next room, to the dungeon selection menu
 
-                    // another room remains to be explored.
-                    if (player.Location.NextRoom != null) {
-                        player.Location = player.Location.NextRoom;
-                        flavourText = "you move to the next room in the dungeon...";
+                    // another room remains to be explored, move player to it
+                    if (player.NextRoomRemains()) {
+                        flavourText = player.MoveToNextRoom();
                         return this;
                     }
 
-                    // mainmenu for now, as MVP.
+                    // if no next room remains, return to mainmenu
                     result = new MainMenu();
                     break;
                 case "levelup":

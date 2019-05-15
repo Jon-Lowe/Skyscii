@@ -264,5 +264,29 @@ namespace Skyscii.SentientStuff
             }
             return ai.generateResponse(this);
         }
+
+        /*
+         * Updates Sentient's location to be the current location's nextRoom, if possible.
+         * removes the player from the old location's sentient list
+         * adds the player to the new location's sentient list
+         */
+        public string MoveToNextRoom()
+        {
+            if (location.NextRoom == null)
+                return "You try to go to the next room, but you're at the end of the dungeon!";
+            else {
+                this.location.Creatures.Remove(this);
+                this.location = location.NextRoom;
+                this.location.Creatures.Add(this);
+                return "You leave your current room, moving forward into the " + location.GetName();
+            }
+        }
+
+        /*
+         * returns true if another room remains to explore
+         */
+        public bool NextRoomRemains() {
+            return location.NextRoom != null;
+        }
     }
 }

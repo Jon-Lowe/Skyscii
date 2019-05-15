@@ -172,26 +172,28 @@ namespace Skyscii.SentientStuff.Tests
             player.UnequipItem("sword");
             Assert.AreEqual(PLAYER_STARTING_ATTACK, player.Stats.Attack);
         }
-
-
-        // TODO:
-        /*
+        
+        // NOTE: logic check that the current room is cleared is done in the BattleMenu
+        // ie, the 'moveon' command will only be available on Sentient.LastOneStanding()
+        // therefore, Sentient does not currently check that current room is cleared before moving.
         [TestMethod()]
         public void movingShouldUpdateCurrentRoom()
         {
             setup();
             Room room2 = new Room("new room", "its a new room!", new List<Sentient>(), inv);
-            // BLOCKED: cannot implement without nextRoom variable in Room class.
-            Assert.Fail("unimplemented");
-        }
+            room.NextRoom = room2;
+            goblin.Stats.Health.Increment(-99999);
+            // initial room
+            Assert.AreEqual(player.Location, room);
+            // another room should remain, as we are still in the first room
+            Assert.IsTrue(player.NextRoomRemains());
 
-        [TestMethod()]
-        public void MovingWhenInLastRoomShouldSetWinnerFlag()
-        {
-            setup();
-            // BLOCKED: cannot implement without nextRoom variable in Room class.
-            Assert.Fail("unimplemented");
+            // move to next room
+            String result = player.MoveToNextRoom();
+            Assert.AreEqual(player.Location, room2);
+
+            // another room doesn't exist, as this is the last room.
+            Assert.IsFalse(player.NextRoomRemains());
         }
-        */
     }
 }
