@@ -202,13 +202,15 @@ namespace Skyscii.SentientStuff.Tests
         [TestMethod()]
         public void ShouldInitialiseCrestsToZeroViaSentient()
         {
-            Assert.AreEqual(0, player.Inventory.CrestCount());
+            setup();
+            Assert.AreEqual(0, player.Inventory.CrestCount);
         }
 
         [TestMethod()]
         public void ShouldInitialiseCrestsToCountViaSentient()
         {
-            Assert.AreEqual(10, personwithcrests.Inventory.CrestCount());
+            setup();
+            Assert.AreEqual(10, personwithcrests.Inventory.CrestCount);
         }
     }
 }

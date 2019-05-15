@@ -36,7 +36,7 @@ namespace Skyscii.SentientStuff
 
         public Sentient(String name, String description, int attack, int health, Room currentLocation, int startingCrests) : this(name, description, attack, health, currentLocation)
         {
-
+            this.Inventory = new Inventory(startingCrests);
         }
 
         public Stats Stats { get { return stats; } set { stats = value; } }

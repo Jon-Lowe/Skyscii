@@ -8,6 +8,7 @@ namespace Skyscii
     {
         // will hold a list of items that the user can collect
         private List<Item> Bag;
+        private int drakeCrests = 0;
 
 
         public Inventory()
@@ -15,9 +16,9 @@ namespace Skyscii
             Bag = new List<Item>();
         }
 
-        public Inventory(int StartingCrests)
+        public Inventory(int StartingCrests) : this()
         {
-            Bag = new List<Item>();
+            drakeCrests = StartingCrests;
         }
 
 
@@ -61,19 +62,25 @@ namespace Skyscii
 
         }
 
-        public int CrestCount()
+        public int CrestCount
         {
-            throw new NotImplementedException();
+            get => drakeCrests;
         }
 
-        public void AddCrests(int v)
+        public void AddCrests(int amount)
         {
-            throw new NotImplementedException();
+            if (amount > 0)
+            {
+                drakeCrests = drakeCrests + amount;
+            }
         }
 
-        public void RemoveCrests(int v)
+        public void RemoveCrests(int amount)
         {
-            throw new NotImplementedException();
+            if (amount > 0)
+            {
+                drakeCrests = drakeCrests - amount;
+            }
         }
     }
 }

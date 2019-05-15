@@ -69,7 +69,7 @@ namespace Skyscii.Tests
         {
             Inventory wallet = new Inventory();
 
-            Assert.AreEqual(0, wallet.CrestCount());
+            Assert.AreEqual(0, wallet.CrestCount);
         }
 
         [TestMethod()]
@@ -77,7 +77,7 @@ namespace Skyscii.Tests
         {
             Inventory wallet = new Inventory(10);
 
-            Assert.AreEqual(10, wallet.CrestCount());
+            Assert.AreEqual(10, wallet.CrestCount);
         }
 
         [TestMethod()]
@@ -87,7 +87,7 @@ namespace Skyscii.Tests
 
             wallet.AddCrests(10);
 
-            Assert.AreEqual(0+10, wallet.CrestCount());
+            Assert.AreEqual(0+10, wallet.CrestCount);
         }
 
         [TestMethod()]
@@ -97,7 +97,7 @@ namespace Skyscii.Tests
 
             wallet.AddCrests(-10);
 
-            Assert.AreEqual(20, wallet.CrestCount());
+            Assert.AreEqual(20, wallet.CrestCount);
         }
 
         [TestMethod()]
@@ -107,7 +107,7 @@ namespace Skyscii.Tests
 
             wallet.RemoveCrests(10);
 
-            Assert.AreEqual(20-10, wallet.CrestCount());
+            Assert.AreEqual(20-10, wallet.CrestCount);
         }
 
         [TestMethod()]
@@ -117,7 +117,7 @@ namespace Skyscii.Tests
 
             wallet.RemoveCrests(-10);
 
-            Assert.AreEqual(20, wallet.CrestCount());
+            Assert.AreEqual(20, wallet.CrestCount);
         }
 
 
