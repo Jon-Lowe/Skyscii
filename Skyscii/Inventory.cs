@@ -15,6 +15,11 @@ namespace Skyscii
             Bag = new List<Item>();
         }
 
+        public Inventory(int StartingCrests)
+        {
+            Bag = new List<Item>();
+        }
+
 
         public List<Item> GetBag
         {
@@ -55,7 +60,20 @@ namespace Skyscii
             return null;
 
         }
-    
 
+        public int CrestCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddCrests(int v)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveCrests(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

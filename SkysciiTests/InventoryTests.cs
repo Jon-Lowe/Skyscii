@@ -64,6 +64,63 @@ namespace Skyscii.Tests
             Assert.AreEqual(spoon0, bag.findTarget("Mighty Spoon0"));
         }
 
+        [TestMethod()]
+        public void ShouldInitialiseCrestsToZero()
+        {
+            Inventory wallet = new Inventory();
+
+            Assert.AreEqual(0, wallet.CrestCount());
+        }
+
+        [TestMethod()]
+        public void ShouldInitialiseCrestsToCount()
+        {
+            Inventory wallet = new Inventory(10);
+
+            Assert.AreEqual(10, wallet.CrestCount());
+        }
+
+        [TestMethod()]
+        public void AddCrestsShouldWork()
+        {
+            Inventory wallet = new Inventory();
+
+            wallet.AddCrests(10);
+
+            Assert.AreEqual(0+10, wallet.CrestCount());
+        }
+
+        [TestMethod()]
+        public void AddCrestsShouldNeverSubractCrests()
+        {
+            Inventory wallet = new Inventory(20);
+
+            wallet.AddCrests(-10);
+
+            Assert.AreEqual(20, wallet.CrestCount());
+        }
+
+        [TestMethod()]
+        public void RemoveCrestsShouldWork()
+        {
+            Inventory wallet = new Inventory(20);
+
+            wallet.RemoveCrests(10);
+
+            Assert.AreEqual(20-10, wallet.CrestCount());
+        }
+
+        [TestMethod()]
+        public void RemoveCrestsShouldNeverAddCrests()
+        {
+            Inventory wallet = new Inventory(20);
+
+            wallet.RemoveCrests(-10);
+
+            Assert.AreEqual(20, wallet.CrestCount());
+        }
+
+
 
     }
 }
