@@ -19,6 +19,14 @@ namespace Skyscii
             validActions.Add("lookat");
             validActions.Add("inventory");
             validActions.Add("quit");
+            if (player.LastOneStanding())
+            {
+                validActions.Add("moveon");
+            }
+            if (player.Stats.Exp.GetPendingLevelUps() > 0)
+            {
+                validActions.Add("levelup");
+            }
         }
 
         internal override void Draw()
@@ -38,6 +46,14 @@ namespace Skyscii
             Console.WriteLine("(attack <enemyname>) attack an enemy");
             Console.WriteLine("(look) around");
             Console.WriteLine("(inventory) open your inventory");
+            if (validActions.Contains("moveon"))
+            {
+                Console.WriteLine("(moveon) move to the next room");
+            }
+            if (validActions.Contains("levelup"))
+            {
+                Console.WriteLine("(levelup) allocate stats - (" + player.Stats.Exp.GetPendingLevelUps() + ") remaining");
+            }
             Console.WriteLine();
             if (error != "")
             {
@@ -47,6 +63,7 @@ namespace Skyscii
             }
             if (flavourText != "") {
                 Console.WriteLine(flavourText);
+                Console.WriteLine();
             }
         }
 
@@ -54,6 +71,12 @@ namespace Skyscii
         {
             flavourText = "";
             Menu result = this;
+
+            if (!player.IsAlive())
+            {
+                return new MainMenu();
+            }
+
             switch (command.GetAction())
             {
                 case "attack":
@@ -64,16 +87,27 @@ namespace Skyscii
                         }
                     }
 
+                    if (!player.IsAlive())
+                    {
+                        flavourText += "\nYou have died! Type quit to return to main menu.";
+                        break;
+                    }
+
                     if (player.Stats.Exp.GetPendingLevelUps() > 0){
                         flavourText += "\nYou have "+player.Stats.Exp.GetPendingLevelUps()+" pending level ups. " +
                             "(levelup)";
-                        validActions.Add("levelup");
+                        if (!validActions.Contains("levelup"))
+                        {
+                            validActions.Add("levelup");
+                        }
                     }
 
                     if (player.LastOneStanding()) {
                         flavourText += "\nYou have killed absolutely everyone in this room. Time to move on. (moveon)";
-                        validActions.Add("moveon");
-                        result = this;
+                        if (!validActions.Contains("moveon"))
+                        {
+                            validActions.Add("moveon");
+                        }
                     }
 
                     result = this;
