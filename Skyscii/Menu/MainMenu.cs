@@ -15,13 +15,40 @@ namespace Skyscii
 
         internal override void Draw()
         {
-            Console.WriteLine("Skyscii");
+            Console.WriteLine("");
+            Console.WriteLine(@"
+                        ________     ____       _   _              _          _ _ 
+                       /  ____  \   |  _ \     | | | |            | |        (_|_)
+                      /  / ___|  \  | |_) | ___| |_| |__   ___  __| |___  ___ _ _ 
+                     |  | |       | |  _ < / _ \ __| '_ \ / _ \/ _` / __|/ __| | |
+                     |  | |___    | | |_) |  __/ |_| | | |  __/ (_| \__ \ (__| | |
+                      \  \____|  /  |____/ \___|\__|_| |_|\___|\__,_|___/\___|_|_|
+                       \________/   Presents                       
+                                                                                  
+
+
+
+             _______    _                     _______    _______   _________  _________   _  _ 
+            (  ____ \  | \    /\  |\     /|  (  ____ \  (  ____ \  \__   __/  \__   __/  ( )( )
+            | (    \/  |  \  / /  ( \   / )  | (    \/  | (    \/     ) (        ) (     | || |
+            | (_____   |  (_/ /    \ (_) /   | (_____   | |           | |        | |     | || |
+            (_____  )  |   _ (      \   /    (_____  )  | |           | |        | |     | || |
+                  ) |  |  ( \ \      ) (           ) |  | |           | |        | |     (_)(_)
+            /\____) |  |  /  \ \     | |     /\____) |  | (____/\  ___) (___  ___) (___   _  _ 
+            \_______)  |_/    \/     \_/     \_______)  (_______/  \_______/  \_______/  (_)(_)
+                                                                                               
+
+                     
+            ");
             Console.WriteLine("----------");
+            Console.WriteLine("");
             Console.WriteLine("Please type a command");
             Console.WriteLine();
             Console.WriteLine("(play) Start a new game");
             Console.WriteLine("(quit) Close to desktop");
             Console.WriteLine();
+            Console.WriteLine("----------");
+            Console.WriteLine("");
             if (error != "")
             {
                 Console.WriteLine(error);
