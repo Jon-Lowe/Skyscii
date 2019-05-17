@@ -12,6 +12,7 @@ namespace Skyscii.SentientStuff.Tests
     public class SentientTests
     {
         Sentient player;
+        Sentient personwithcrests;
         Sentient goblin;
         List<Sentient> creatures = new List<Sentient>();
         Inventory inv = new Inventory();
@@ -30,6 +31,8 @@ namespace Skyscii.SentientStuff.Tests
             room = new Room("testroom", "this is a test room", creatures, inv);
             player = new Sentient("player", "it's you!", PLAYER_STARTING_ATTACK, 30, room);
             goblin = new Sentient("goblin", "he is lean, mean, and very green.", 2, 30, room);
+
+            personwithcrests = new Sentient("personwithcrests", "sentient with money", PLAYER_STARTING_ATTACK, 30, room, 10);
 
             creatures.Add(player);
             creatures.Add(goblin);
@@ -194,6 +197,20 @@ namespace Skyscii.SentientStuff.Tests
 
             // another room doesn't exist, as this is the last room.
             Assert.IsFalse(player.NextRoomRemains());
+        }
+
+        [TestMethod()]
+        public void ShouldInitialiseCrestsToZeroViaSentient()
+        {
+            setup();
+            Assert.AreEqual(0, player.Inventory.CrestCount);
+        }
+
+        [TestMethod()]
+        public void ShouldInitialiseCrestsToCountViaSentient()
+        {
+            setup();
+            Assert.AreEqual(10, personwithcrests.Inventory.CrestCount);
         }
     }
 }

@@ -34,6 +34,11 @@ namespace Skyscii.SentientStuff
             this.ai = new AI();
         }
 
+        public Sentient(String name, String description, int attack, int health, Room currentLocation, int startingCrests) : this(name, description, attack, health, currentLocation)
+        {
+            this.Inventory = new Inventory(startingCrests);
+        }
+
         public Stats Stats { get { return stats; } set { stats = value; } }
         public Inventory Inventory { get { return inventory; } set { inventory = value; } }
         public AI AI { get { return ai; } set { ai = value; } }
