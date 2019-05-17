@@ -120,6 +120,24 @@ namespace Skyscii.Tests
             Assert.AreEqual(20, wallet.CrestCount);
         }
 
+        [TestMethod()]
+        public void RemoveCrestsCantGoNegative()
+        {
+            Inventory wallet = new Inventory(10);
+
+            wallet.RemoveCrests(20);
+
+            Assert.AreEqual(10, 10);
+        }
+
+        [TestMethod()]
+        public void RemoveCrestsShouldInformIfSuccessful()
+        {
+            Inventory wallet = new Inventory(10);
+
+            Assert.AreEqual(false, wallet.RemoveCrests(15));
+        }
+
 
 
     }
