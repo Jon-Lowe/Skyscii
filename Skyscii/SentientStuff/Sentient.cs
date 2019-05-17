@@ -153,9 +153,9 @@ namespace Skyscii.SentientStuff
                     int expGained = 20 * enemyCreature.stats.Exp.GetLevel();
                     stats.Exp.Increment(expGained);
                     String toReturn =  name +" attacks " + targetName + " for " + stats.Attack + " points of damage, and slays them!\n" +
-                        "You gain "+expGained+" experience points!";
+                        name + " gains "+expGained+" experience points!";
                     if (stats.Exp.GetPendingLevelUps() > 0)
-                        toReturn += " It looks like you can level up!";
+                        toReturn += " It looks like " + name + " can level up!";
                     return toReturn;
                 }
             }
