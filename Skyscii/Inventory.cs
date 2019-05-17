@@ -8,12 +8,13 @@ namespace Skyscii
     {
         // will hold a list of items that the user can collect
         private List<Item> Bag;
-        private int drakeCrests = 0;
+        private int drakeCrests;
 
 
         public Inventory()
         {
             Bag = new List<Item>();
+            drakeCrests = 0;
         }
 
         public Inventory(int StartingCrests) : this()
@@ -67,20 +68,26 @@ namespace Skyscii
             get => drakeCrests;
         }
 
+        //Function makes sure you're adding a positive number
         public void AddCrests(int amount)
         {
             if (amount > 0)
-            {
-                drakeCrests = drakeCrests + amount;
-            }
+                drakeCrests += amount;
         }
 
-        public void RemoveCrests(int amount)
+        //Makes sure you're subtracting a positive number
+        //If ammount is positive, subtracts from total drakecrests if you can afford to
+        /* 
+         * @param: amount: amount to remove from total crests
+         * @returns: true if successful, false if cannot afford
+         */
+        public bool RemoveCrests(int amount)
         {
-            if (amount > 0)
-            {
-                drakeCrests = drakeCrests - amount;
-            }
+            if (amount < 0 || ((drakeCrests - amount) < 0))
+                return false;
+
+            drakeCrests -= amount;
+            return true;
         }
     }
 }
