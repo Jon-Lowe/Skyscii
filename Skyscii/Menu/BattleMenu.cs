@@ -83,11 +83,7 @@ namespace Skyscii
             {
                 case "attack":
                     flavourText = player.Attack(command.GetTarget());
-                    foreach (Sentient s in player.Location.Creatures) {
-                        if (s.GetName() != "player" && s.IsAlive()) {
-                            flavourText += '\n'+ s.ExecuteAIAction();
-                        }
-                    }
+                    EnemyTurn();
 
                     if (!player.IsAlive())
                     {
@@ -146,13 +142,40 @@ namespace Skyscii
                     result = new InventoryMenu(player, typeof(BattleMenu));
                     break;
                 case "flee":
-                    result = new TownMenu(player);
+                    Random random = new Random();
+                    int roll = random.Next(100);
+                    int chance = (((player.Stats.Exp.GetLevel() + player.Stats.Exp.GetPendingLevelUps()) / player.Location.Creatures.First().Stats.Exp.GetLevel()) * 100) / 2;
+                    if (roll < chance)
+                    {
+                        result = new TownMenu(player);
+                    }
+                    else
+                    {
+                        flavourText = "You tried to flee but couldnt get away!";
+                        EnemyTurn();
+                        if (!player.IsAlive())
+                        {
+                            flavourText += "\nYou have died! Type quit to return to main menu.";
+                            break;
+                        }
+                    }
                     break;
                 default:
                     error = "Please type a valid command: (not '"+command.GetAction()+"')";
                     break;
             }
             return result;
+        }
+
+        private void EnemyTurn()
+        {
+            foreach (Sentient s in player.Location.Creatures)
+            {
+                if (s.GetName() != "player" && s.IsAlive())
+                {
+                    flavourText += '\n' + s.ExecuteAIAction();
+                }
+            }
         }
     }
 }
