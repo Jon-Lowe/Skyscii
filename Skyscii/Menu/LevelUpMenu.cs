@@ -10,10 +10,12 @@ namespace Skyscii
     class LevelUpMenu : Menu
     {
         Sentient player;
+        Type prevMenu;
         String flavourText = "";
 
-        public LevelUpMenu(Sentient player) {
+        public LevelUpMenu(Sentient player, Type prevMenu) {
             this.player = player;
+            this.prevMenu = prevMenu;
             validActions.Add("attack");
             validActions.Add("health");
             validActions.Add("quit");
@@ -60,7 +62,14 @@ namespace Skyscii
                     flavourText = player.LevelUp(false, true);
                     break;
                 case "quit":
-                    result = new BattleMenu(player);
+                    if (prevMenu == typeof(BattleMenu))
+                    {
+                        result = new BattleMenu(player);
+                    }
+                    if (prevMenu == typeof(TownMenu))
+                    {
+                        result = new TownMenu(player);
+                    }
                     break;
                 default:
                     error = "Please type a valid command";

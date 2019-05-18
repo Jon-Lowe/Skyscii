@@ -18,6 +18,7 @@ namespace Skyscii
             validActions.Add("attack");
             validActions.Add("lookat");
             validActions.Add("inventory");
+            validActions.Add("flee");
             validActions.Add("quit");
             if (player.LastOneStanding())
             {
@@ -46,6 +47,7 @@ namespace Skyscii
             Console.WriteLine("(attack <enemyname>) attack an enemy");
             Console.WriteLine("(look) around");
             Console.WriteLine("(inventory) open your inventory");
+            Console.WriteLine("(flee) flee the battle and return to town");
             if (validActions.Contains("moveon"))
             {
                 Console.WriteLine("(moveon) move to the next room");
@@ -138,10 +140,13 @@ namespace Skyscii
                     result = new MainMenu();
                     break;
                 case "levelup":
-                    result = new LevelUpMenu(player);
+                    result = new LevelUpMenu(player, typeof(BattleMenu));
                     break;
                 case "inventory":
-                    result = new InventoryMenu(player);
+                    result = new InventoryMenu(player, typeof(BattleMenu));
+                    break;
+                case "flee":
+                    result = new TownMenu(player);
                     break;
                 default:
                     error = "Please type a valid command: (not '"+command.GetAction()+"')";
