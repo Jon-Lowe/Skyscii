@@ -34,6 +34,11 @@ namespace Skyscii.SentientStuff
             this.ai = new AI();
         }
 
+        public Sentient(String name, String description, int attack, int health, Room currentLocation, int startingCrests) : this(name, description, attack, health, currentLocation)
+        {
+            this.Inventory = new Inventory(startingCrests);
+        }
+
         public Stats Stats { get { return stats; } set { stats = value; } }
         public Inventory Inventory { get { return inventory; } set { inventory = value; } }
         public AI AI { get { return ai; } set { ai = value; } }
@@ -76,11 +81,27 @@ namespace Skyscii.SentientStuff
         /*
          * increments the Sentient's stats based off the provided attack, health, experience
          */
-        public void ApplyModifier(int attack, int health, int experience) {
+        public String ApplyModifier(int attack, int health, int experience) {
             stats.Health.Increment(health);
             stats.Attack += attack;
             stats.Exp.Increment(experience);
 
+            String toReturn = "";
+            if (attack > 0)
+                toReturn += "You feel stronger.\n";
+            if (attack < 0)
+                toReturn += "You feel weaker\n";
+            if (health > 0)
+                toReturn += "You feel vitality surge through you.\n";
+            if (health < 0)
+                toReturn += "You feel cold...\n";
+            if (experience > 0)
+                toReturn += "You feel wiser, somehow.\n";
+            if (experience < 0)
+                toReturn += "You feel some vital knowledge slipping away\n";
+            if (experience == 0 && health == 0 && attack == 0)
+                toReturn += "But nothing changed.\n";
+            return toReturn;
             // perhaps return flavour text?
         }
 
@@ -132,15 +153,46 @@ namespace Skyscii.SentientStuff
                     int expGained = 20 * enemyCreature.stats.Exp.GetLevel();
                     stats.Exp.Increment(expGained);
                     String toReturn =  name +" attacks " + targetName + " for " + stats.Attack + " points of damage, and slays them!\n" +
-                        "You gain "+expGained+" experience points!";
+                        name + " gains "+expGained+" experience points!";
                     if (stats.Exp.GetPendingLevelUps() > 0)
-                        toReturn += " It looks like you can level up!";
+                        toReturn += " It looks like " + name + " can level up!";
                     return toReturn;
                 }
             }
             else {
                 return "You can't attack a defenseless " + targetName + "!";
             }
+        }
+
+        /*
+         * searches the sentient's inventory for an item with itemname 
+         * if it exists and is an Equippable, will attempt to equip it
+         */
+        public String EquipItem(string itemName)
+        {
+            ITargetableObject retrieved = inventory.findTarget(itemName);
+            if (retrieved == null)
+                return "You try to equip a "+itemName+" but cannot find one in your inventory!";
+            if (retrieved is Equippable)
+            {
+                Equippable toEquip = (Equippable)retrieved;
+                return toEquip.EquipMe(this);
+            }
+            else
+                return "You try to equip a " + itemName + " but can't figure out how!";
+        }
+
+        public String UnequipItem(string itemName) {
+            ITargetableObject retrieved = inventory.findTarget(itemName);
+            if (retrieved == null)
+                return "You try to unequip a " + itemName + " but cannot find one in your inventory!";
+            if (retrieved is Equippable)
+            {
+                Equippable toEquip = (Equippable)retrieved;
+                return toEquip.UnequipMe(this);
+            }
+            else
+                return "You try to unequip a " + itemName + " but can't figure out how!";
         }
 
         /*
@@ -152,23 +204,26 @@ namespace Skyscii.SentientStuff
         {
             // search inventory for item
             ITargetableObject retrieved = inventory.findTarget(itemName);
+            if (retrieved == null) {
+                return "You try to use a " + itemName + " but couldn't find one!";
+            }
             if (retrieved is Item) {
                 Item itemToUse = (Item)retrieved;
 
-                // consume item
-                inventory.RemoveItem(itemToUse);
-                
-                ApplyModifier(itemToUse.AttackOption, itemToUse.HealthOption, itemToUse.ExperienceOption);
-                String toReturn = "You use the " + itemName;
-                if (itemToUse.AttackOption == 0 && itemToUse.HealthOption == 0 && itemToUse.ExperienceOption == 0) {
-                    return toReturn += "but nothing happens!";
+                // consume item if it is not equippable
+                if (!(itemToUse is Equippable)) {
+                    inventory.RemoveItem(itemToUse);
+
+                    String toReturn = "You use the " + itemName+"\n";
+
+                    toReturn += ApplyModifier(itemToUse.AttackOption, itemToUse.HealthOption, itemToUse.ExperienceOption);
+                    
+                    if (itemToUse.AttackOption == 0 && itemToUse.HealthOption == 0 && itemToUse.ExperienceOption == 0)
+                    {
+                        return toReturn += "but nothing happens!";
+                    }
+                    return toReturn;
                 }
-                if (itemToUse.AttackOption > 0) 
-                    return toReturn += "and feel stronger";
-                if (itemToUse.HealthOption > 0)
-                    return toReturn += "and feel vitality surge through you";
-                if (itemToUse.ExperienceOption > 0)
-                    return toReturn += "and feel wiser";
             }
             return "You try to use a " + itemName + " but can't figure out how!";
         }
@@ -213,6 +268,30 @@ namespace Skyscii.SentientStuff
                 return null;
             }
             return ai.generateResponse(this);
+        }
+
+        /*
+         * Updates Sentient's location to be the current location's nextRoom, if possible.
+         * removes the player from the old location's sentient list
+         * adds the player to the new location's sentient list
+         */
+        public string MoveToNextRoom()
+        {
+            if (location.NextRoom == null)
+                return "You try to go to the next room, but you're at the end of the dungeon!";
+            else {
+                this.location.Creatures.Remove(this);
+                this.location = location.NextRoom;
+                this.location.Creatures.Add(this);
+                return "You leave your current room, moving forward into the " + location.GetName();
+            }
+        }
+
+        /*
+         * returns true if another room remains to explore
+         */
+        public bool NextRoomRemains() {
+            return location.NextRoom != null;
         }
     }
 }

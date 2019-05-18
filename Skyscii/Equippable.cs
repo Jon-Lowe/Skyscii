@@ -24,7 +24,7 @@ namespace Skyscii
         public string EquipMe(Sentient s)
         {
             // if the same target already has the item equipped
-            if (equippedBy == s && equipped) {
+            if (equippedBy!= null && equippedBy.GetName() == s.GetName() && equipped) {
                 return s.GetName() + " tried to equip the " + this.GetName() + " but already had it equipped!";
             }
             else{
@@ -34,13 +34,15 @@ namespace Skyscii
                     UnequipMe(equippedBy);
                 }
 
+                String toReturn = s.GetName() + " equipped the " + this.GetName()+"\n";
+
                 // modify sentient stats
-                s.ApplyModifier(AttackOption, HealthOption, ExperienceOption);
+                toReturn += s.ApplyModifier(AttackOption, HealthOption, ExperienceOption);
 
                 equippedBy = s;
                 equipped = true;
 
-                return s.GetName() + " equipped the " + this.GetName();
+                return toReturn;
             }
         
         }

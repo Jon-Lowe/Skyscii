@@ -12,28 +12,37 @@ namespace Skyscii.SentientStuff.Tests
     public class SentientTests
     {
         Sentient player;
+        Sentient personwithcrests;
         Sentient goblin;
         List<Sentient> creatures = new List<Sentient>();
         Inventory inv = new Inventory();
         Item roomItem;
+        Equippable sword;
         Room room;
 
         int POTION_HEALTH = 10;
+        int SWORD_ATTACK = 10;
+        int PLAYER_STARTING_ATTACK = 20;
 
         private void setup() {
 
             roomItem = new Item("squid", "it looks at you regretfully", 1000, 0, 12);
-
+            
             room = new Room("testroom", "this is a test room", creatures, inv);
-            player = new Sentient("player", "it's you!", 20, 30, room);
+            player = new Sentient("player", "it's you!", PLAYER_STARTING_ATTACK, 30, room);
             goblin = new Sentient("goblin", "he is lean, mean, and very green.", 2, 30, room);
+
+            personwithcrests = new Sentient("personwithcrests", "sentient with money", PLAYER_STARTING_ATTACK, 30, room, 10);
 
             creatures.Add(player);
             creatures.Add(goblin);
 
             // adding items
             Item potion = new Item("potion", "it's red and bubbly", 0, POTION_HEALTH, 0);
+            sword = new Equippable("sword", "take this with you!", 0, 0, SWORD_ATTACK);
+
             player.Inventory.AddItem(potion);
+            player.Inventory.AddItem(sword);
 
             Item death = new Item("DEATH", "it smiles at you", 0, -99999999, 0);
             player.Inventory.AddItem(death);
@@ -133,25 +142,75 @@ namespace Skyscii.SentientStuff.Tests
             Assert.IsTrue(originalPlayerHealth > player.Stats.Health.GetCurrent());
         }
 
+        [TestMethod()]
+        public void BugFixUsingEquippableShouldNotConsumeIt() {
+            setup();
+            player.EquipItem("sword");
+            Assert.AreEqual(sword, player.Inventory.findTarget("sword"));
+        }
 
-        // TODO:
-        /*
+        [TestMethod()]
+        public void EquippingItemShouldIncreaseStats() {
+            setup();
+            player.EquipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK + SWORD_ATTACK, player.Stats.Attack);
+        }
+
+        [TestMethod()]
+        public void EquippingItemTwiceShouldNotIncreaseStatsTwice() {
+            setup();
+            player.EquipItem("sword");
+            player.EquipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK + SWORD_ATTACK, player.Stats.Attack);
+        }
+
+        [TestMethod()]
+        public void unequippingItemShouldReduceStatsIfEquipped() {
+            setup();
+            player.EquipItem("sword");
+            player.UnequipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK, player.Stats.Attack);
+
+            // unequipping twice should not decrease stats further, either.
+            player.UnequipItem("sword");
+            Assert.AreEqual(PLAYER_STARTING_ATTACK, player.Stats.Attack);
+        }
+        
+        // NOTE: logic check that the current room is cleared is done in the BattleMenu
+        // ie, the 'moveon' command will only be available on Sentient.LastOneStanding()
+        // therefore, Sentient does not currently check that current room is cleared before moving.
         [TestMethod()]
         public void movingShouldUpdateCurrentRoom()
         {
             setup();
             Room room2 = new Room("new room", "its a new room!", new List<Sentient>(), inv);
-            // BLOCKED: cannot implement without nextRoom variable in Room class.
-            Assert.Fail("unimplemented");
+            room.NextRoom = room2;
+            goblin.Stats.Health.Increment(-99999);
+            // initial room
+            Assert.AreEqual(player.Location, room);
+            // another room should remain, as we are still in the first room
+            Assert.IsTrue(player.NextRoomRemains());
+
+            // move to next room
+            String result = player.MoveToNextRoom();
+            Assert.AreEqual(player.Location, room2);
+
+            // another room doesn't exist, as this is the last room.
+            Assert.IsFalse(player.NextRoomRemains());
         }
 
         [TestMethod()]
-        public void MovingWhenInLastRoomShouldSetWinnerFlag()
+        public void ShouldInitialiseCrestsToZeroViaSentient()
         {
             setup();
-            // BLOCKED: cannot implement without nextRoom variable in Room class.
-            Assert.Fail("unimplemented");
+            Assert.AreEqual(0, player.Inventory.CrestCount);
         }
-        */
+
+        [TestMethod()]
+        public void ShouldInitialiseCrestsToCountViaSentient()
+        {
+            setup();
+            Assert.AreEqual(10, personwithcrests.Inventory.CrestCount);
+        }
     }
 }
