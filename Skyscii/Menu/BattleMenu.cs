@@ -45,7 +45,7 @@ namespace Skyscii
             }
             Console.WriteLine();
             Console.WriteLine("(attack <enemyname>) attack an enemy");
-            Console.WriteLine("(look) around");
+            Console.WriteLine("(lookat) <target> investigate");
             Console.WriteLine("(inventory) open your inventory");
             Console.WriteLine("(flee) flee the battle and return to town");
             if (validActions.Contains("moveon"))
