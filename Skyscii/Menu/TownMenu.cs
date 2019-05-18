@@ -15,6 +15,8 @@ namespace Skyscii
         public TownMenu(Sentient player)
         {
             this.player = player;
+            player.Stats.Health.SetCurrent(player.Stats.Health.GetMax());
+            flavourText += "You have been healed to full health by the Spring of Life in town.";
             validActions.Add("adventure");
             validActions.Add("shop");
             validActions.Add("inventory");
