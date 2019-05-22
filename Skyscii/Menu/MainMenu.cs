@@ -64,7 +64,9 @@ namespace Skyscii
             {
                 case "play":
                     Room room1 = new Room("room", "it's a room", new List<Sentient>(), new Inventory());
-                    room1.Creatures.Add(new Sentient("goblin", "He is green and mean!", 10, 50, room1));
+                    Sentient goblin = new Sentient("goblin", "He is green and mean!", 10, 50, room1);
+                    
+                    room1.Creatures.Add(goblin);
                     Sentient player = new Sentient("player", "it's you!", 10, 50, room1);
 
                     /*
@@ -84,6 +86,10 @@ namespace Skyscii
                     player.Inventory.AddItem(items.GetPotion());
 
                     room1.Creatures.Add(player);
+
+                    // here just to playtest looting items from corpses.
+                    goblin.Inventory.AddItem(items.GetEquipment());
+                    goblin.Inventory.AddCrests(30);
 
 
                     // room2 setup

@@ -148,14 +148,29 @@ namespace Skyscii.SentientStuff
                 enemyCreature.ApplyModifier(0, -1 * stats.Attack, 0);
                 if (enemyCreature.IsAlive())
                     return name + " attacks " + targetName + " for " + stats.Attack + " points of damage!";
-                else {
-                    // TODO: lazy expgained, should be more fun
+                else { // you have killed someone!
+
+                    // get experience from your kill
                     int expGained = 20 * enemyCreature.stats.Exp.GetLevel();
                     stats.Exp.Increment(expGained);
                     String toReturn =  name +" attacks " + targetName + " for " + stats.Attack + " points of damage, and slays them!\n" +
-                        name + " gains "+expGained+" experience points!";
+                        name + " gains "+expGained+" experience points!\n";
+
+                    // gain items from the fallen
+                    foreach (Item i in enemyCreature.Inventory.GetBag) {
+                        this.Inventory.AddItem(i);
+                        toReturn += name + " looted a " + i.GetName() + " from the " + targetName + " corpse!\n";
+                    }
+
+                    // gain cash from the fallen
+                    this.Inventory.AddCrests(enemyCreature.Inventory.CrestCount);
+                    if (enemyCreature.Inventory.CrestCount > 0) {
+                        toReturn += name + " looted " + enemyCreature.Inventory.CrestCount + " crests from the " + targetName + " corpse!\n";
+                    }
+
                     if (stats.Exp.GetPendingLevelUps() > 0)
-                        toReturn += " It looks like " + name + " can level up!";
+                        toReturn += "\n ** It looks like " + name + " can level up! **";
+
                     return toReturn;
                 }
             }
