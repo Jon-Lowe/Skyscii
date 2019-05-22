@@ -18,6 +18,7 @@ namespace Skyscii
             validActions.Add("attack");
             validActions.Add("lookat");
             validActions.Add("inventory");
+            validActions.Add("flee");
             validActions.Add("quit");
             if (player.LastOneStanding())
             {
@@ -44,8 +45,9 @@ namespace Skyscii
             }
             Console.WriteLine();
             Console.WriteLine("(attack <enemyname>) attack an enemy");
-            Console.WriteLine("(look) around");
+            Console.WriteLine("(lookat) <target> investigate");
             Console.WriteLine("(inventory) open your inventory");
+            Console.WriteLine("(flee) flee the battle and return to town");
             if (validActions.Contains("moveon"))
             {
                 Console.WriteLine("(moveon) move to the next room");
@@ -81,11 +83,7 @@ namespace Skyscii
             {
                 case "attack":
                     flavourText = player.Attack(command.GetTarget());
-                    foreach (Sentient s in player.Location.Creatures) {
-                        if (s.GetName() != "player" && s.IsAlive()) {
-                            flavourText += '\n'+ s.ExecuteAIAction();
-                        }
-                    }
+                    EnemyTurn();
 
                     if (!player.IsAlive())
                     {
@@ -138,16 +136,46 @@ namespace Skyscii
                     result = new MainMenu();
                     break;
                 case "levelup":
-                    result = new LevelUpMenu(player);
+                    result = new LevelUpMenu(player, typeof(BattleMenu));
                     break;
                 case "inventory":
-                    result = new InventoryMenu(player);
+                    result = new InventoryMenu(player, typeof(BattleMenu));
+                    break;
+                case "flee":
+                    Random random = new Random();
+                    int roll = random.Next(100);
+                    int chance = (((player.Stats.Exp.GetLevel() + player.Stats.Exp.GetPendingLevelUps()) / player.Location.Creatures.First().Stats.Exp.GetLevel()) * 100) / 2;
+                    if (roll < chance)
+                    {
+                        result = new TownMenu(player);
+                    }
+                    else
+                    {
+                        flavourText = "You tried to flee but couldnt get away!";
+                        EnemyTurn();
+                        if (!player.IsAlive())
+                        {
+                            flavourText += "\nYou have died! Type quit to return to main menu.";
+                            break;
+                        }
+                    }
                     break;
                 default:
                     error = "Please type a valid command: (not '"+command.GetAction()+"')";
                     break;
             }
             return result;
+        }
+
+        private void EnemyTurn()
+        {
+            foreach (Sentient s in player.Location.Creatures)
+            {
+                if (s.GetName() != "player" && s.IsAlive())
+                {
+                    flavourText += '\n' + s.ExecuteAIAction();
+                }
+            }
         }
     }
 }

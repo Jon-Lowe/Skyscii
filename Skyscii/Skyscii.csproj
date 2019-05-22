@@ -55,6 +55,7 @@
     <Compile Include="Menu\LevelUpMenu.cs" />
     <Compile Include="Menu\MainMenu.cs" />
     <Compile Include="Menu\Menu.cs" />
+    <Compile Include="Menu\TownMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
