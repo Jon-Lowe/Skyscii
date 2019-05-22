@@ -66,11 +66,25 @@ namespace Skyscii
                     Room room1 = new Room("room", "it's a room", new List<Sentient>(), new Inventory());
                     room1.Creatures.Add(new Sentient("goblin", "He is green and mean!", 10, 50, room1));
                     Sentient player = new Sentient("player", "it's you!", 10, 50, room1);
+
+                    /*
+                     * This is the old setup:
                     Item potion = new Item("Green Potion", "As green as the goblin infront of you.", 0, 20, 0);
                     Equippable sword = new Equippable("sword", "take this with you!", 0, 0, 5);
                     player.Inventory.AddItem(potion);
                     player.Inventory.AddItem(sword);
+                    */
+                    ItemFactory items = new ItemFactory();
+
+                    player.Inventory.AddItem(items.GetConsumable());
+                    player.Inventory.AddItem(items.GetConsumable());
+                    player.Inventory.AddItem(items.GetEquipment());
+                    player.Inventory.AddItem(items.GetEquipment());
+                    player.Inventory.AddItem(items.GetPotion());
+                    player.Inventory.AddItem(items.GetPotion());
+
                     room1.Creatures.Add(player);
+
 
                     // room2 setup
                     Room room2 = new Room("Boss Room", "It looks a little scary!", new List<Sentient>(), new Inventory());

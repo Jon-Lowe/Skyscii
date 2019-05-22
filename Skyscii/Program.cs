@@ -4,6 +4,8 @@ namespace Skyscii
 {
     class Program
     {
+        static readonly Random random = new Random();
+
         static void Main(string[] args)
         {
             Menu currentMenu = new MainMenu();
@@ -18,5 +20,6 @@ namespace Skyscii
                 Console.Clear();
             }
         }
+        public static Random RandomNumberGenerator { get => random; }            
     }
 }
