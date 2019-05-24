@@ -11,11 +11,13 @@ namespace Skyscii
     internal class InventoryMenu : Menu
     {
         Sentient player;
+        Type prevMenu;
         String flavourText = "";
 
-        public InventoryMenu(Sentient player)
+        public InventoryMenu(Sentient player, Type prevMenu)
         {
             this.player = player;
+            this.prevMenu = prevMenu;
             validActions.Add("use");
             validActions.Add("equip");
             validActions.Add("unequip");
@@ -95,7 +97,14 @@ namespace Skyscii
                     result = this;
                     break;
                 case "quit":
-                    result = new BattleMenu(player);
+                    if (prevMenu == typeof(BattleMenu))
+                    {
+                        result = new BattleMenu(player);
+                    }
+                    if (prevMenu == typeof(TownMenu))
+                    {
+                        result = new TownMenu(player);
+                    }
                     break;
                 default:
                     error = "Please type a valid command";

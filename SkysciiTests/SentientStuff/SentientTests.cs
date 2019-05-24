@@ -212,5 +212,34 @@ namespace Skyscii.SentientStuff.Tests
             setup();
             Assert.AreEqual(10, personwithcrests.Inventory.CrestCount);
         }
+
+        [TestMethod()]
+        public void WhenKilledSentientShouldGiveCrestsToTheirKiller() {
+            setup();
+            goblin.Inventory.AddCrests(10);
+
+            // player starts with no crests
+            Assert.AreEqual(0, player.Inventory.CrestCount);
+
+            player.Stats.Attack = 1000; // player should kill goblin in one hit
+            player.Attack("goblin");
+
+            // player should be given the goblin's crests
+            Assert.AreEqual(10, player.Inventory.CrestCount);
+        }
+
+        [TestMethod()]
+        public void WhenKilledSentientShouldGiveItemsToTheirKiller() {
+            setup();
+
+            Item goblinItem = new Item("goblin treasure", "what does it do?", 0, 0, 0);
+            goblin.Inventory.AddItem(goblinItem);
+            player.Stats.Attack = 1000;
+            player.Attack("goblin");
+
+            Assert.AreEqual(goblinItem, player.Inventory.findTarget("goblin treasure"));
+        }
+
+
     }
 }
